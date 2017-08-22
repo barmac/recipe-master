@@ -1,0 +1,11 @@
+import {Ingredient} from './ingredient';
+import {Instruction} from './instruction';
+
+export class Recipe {
+  id: string;
+  name: string;
+  desc: string;
+  photoURL: string;
+  ingredients: Array<Ingredient>;
+  instructions: Array<Instruction>;
+}
