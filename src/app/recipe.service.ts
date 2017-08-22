@@ -50,7 +50,6 @@ export class RecipeService {
     return this.http.get(this.recipesUrl, {headers: this.headers})
       .toPromise()
       .then(response => {
-        console.log(response.json());
         return response.json().recipes as Recipe[];
       })
       .catch(this.handleError);
