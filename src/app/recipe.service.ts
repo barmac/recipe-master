@@ -37,11 +37,11 @@ export class RecipeService {
       .catch(this.handleError);
   }
 
-  getRecipe(id: number): Promise<Recipe> {
+  getRecipe(id: string): Promise<Recipe> {
     const url = `${this.recipesUrl}/${id}`;
     return this.http.get(url, {headers: this.headers})
       .toPromise()
-      .then(response => response.json().data as Recipe)
+      .then(response => response.json().recipe as Recipe)
       .catch(this.handleError);
   }
 

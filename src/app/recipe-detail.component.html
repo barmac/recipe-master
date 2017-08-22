@@ -1,0 +1,10 @@
+<div>
+  <h2>{{recipe.name}} details!</h2>
+  <div>
+    <label>id: </label>{{recipe._id}}</div>
+  <div>
+    <label>name: </label>
+    <input [(ngModel)]="recipe.name" placeholder="name" />
+  </div>
+  <button (click)="save()">Save</button>
+</div>

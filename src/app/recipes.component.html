@@ -9,7 +9,9 @@
   <li *ngFor="let recipe of recipes"
       [class.selected]="recipe === selectedRecipe"
       (click)="onSelect(recipe)">
+    <a routerLink="recipe/{{recipe._id}}" routerLinkActive="active">
     <span class="badge">{{recipe._id}}</span> {{recipe.name}}
+    </a>
     <button class="delete"
             (click)="remove(recipe); $event.stopPropagation()">x</button>
   </li>
