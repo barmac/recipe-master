@@ -2,7 +2,7 @@ import {Ingredient} from './ingredient';
 import {Instruction} from './instruction';
 
 export class Recipe {
-  id: string;
+  _id: string;
   name: string;
   desc: string;
   photoURL: string;

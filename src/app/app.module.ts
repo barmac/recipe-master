@@ -1,20 +1,27 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
-
-// Import the Http Module and our Data Service
+import { NgModule }       from '@angular/core';
+import { BrowserModule }  from '@angular/platform-browser';
+import { FormsModule }    from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { DataService } from './data.service';
+
+import { AppComponent }         from './app.component';
+
+import { AppRoutingModule }     from './app-routing.module';
+
+import {RecipesComponent} from './recipes.component';
+import {RecipeService} from './recipe.service';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
     BrowserModule,
-    HttpModule              // <-Add HttpModule
+    FormsModule,
+    HttpModule,
+    AppRoutingModule
   ],
-  providers: [DataService], // <-Add DataService
-  bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    RecipesComponent
+  ],
+  providers: [ RecipeService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
