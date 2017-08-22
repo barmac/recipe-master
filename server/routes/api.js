@@ -30,6 +30,43 @@ router.post('/recipes', (req, res) => {
   });
 });
 
+// Update recipe
+router.put('/recipes/:id', (req, res) => {
+  let id = req.params.id;
+  let recipe = req.body;
+  if (!ObjectID.isValid(id)) {
+    res.status(404).send({});
+  } else {
+    Recipe.findByIdAndUpdate(id, recipe, {new: true}).then((recipe) => {
+      if (!recipe) {
+        res.status(404).send({});
+      } else {
+        res.send({recipe});
+      }
+    }).catch((e) => {
+      res.status(400).send(e);
+    });
+  }
+});
+
+// Delete recipe
+router.delete('/recipes/:id', (req, res) => {
+  let id = req.params.id;
+  if (!ObjectID.isValid(id)) {
+    res.status(404).send({});
+  } else {
+    Recipe.findByIdAndRemove(id).then((recipe) => {
+      if (!recipe) {
+        res.status(404).send({});
+      } else {
+        res.send({recipe});
+      }
+    }).catch((e) => {
+      res.status(400).send(e);
+    });
+  }
+});
+
 // Get recipe
 router.get('/recipes/:id', (req, res) => {
   let id = req.params.id;
