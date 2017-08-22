@@ -1,7 +1,9 @@
-<h1>Welcome to app!</h1>
-
-<ul>
-  <li *ngFor="let recipe of recipes">
-    {{ recipe.name }}: {{ recipe.desc }}
-  </li>
-</ul>
+<h1>{{title}}</h1>
+<nav>
+  <a routerLink="/add-recipe" routerLinkActive="active">Add recipe</a>
+  <a>Sample 1</a>
+  <a>Sample 2</a>
+  <a>Sample 3</a>
+  <a routerLink="/" routerLinkActive="active">Recipes</a>
+</nav>
+<router-outlet></router-outlet>
