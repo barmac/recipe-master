@@ -1,10 +1,51 @@
-<div *ngIf="recipe">
-  <h2>{{recipe.name}} details!</h2>
-  <div>
-    <label>id: </label>{{recipe._id}}</div>
-  <div>
-    <label>name: </label>
-    <input [(ngModel)]="recipe.name" placeholder="name" />
+<div class="col-sm-1 col-md-1 col-lg-1"></div>
+<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+  <div *ngIf="recipe">
+    <div class="row">
+      <div class="col-xs-12 col-md-7 col-lg-7">
+        <div class="recipe" [ngStyle]="{background: 'url(' + recipe.photoURL + ')',
+         backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}">
+          <div>
+            <p class="time">
+              {{ getTime(recipe) }}
+            </p>
+            <p class="name">
+              {{ recipe.name }}
+            </p>
+          </div>
+        </div>
+        <div>
+          {{ recipe.desc }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-5 col-lg-5">
+        <button class="btn btn-default btn-md">Edit</button>
+        <h3>
+          Ingredients
+        </h3>
+        <table class="table-responsive">
+          <tr *ngFor="let ingredient of recipe.ingredients">
+            <td class="col-xs-5">{{ ingredient.quantity }} {{ ingredient.unit }}</td>
+            <td class="col-xs-7">{{ ingredient.name }}</td>
+          </tr>
+        </table>
+        <ul>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-7">
+        <h3>
+          Preparing
+        </h3>
+        <ol>
+          <li *ngFor="let instruction of recipe.instructions">
+            {{ instruction.name }}
+          </li>
+        </ol>
+      </div>
+      <div class="col-xs-5"></div>
+    </div>
   </div>
-  <button (click)="save()">Save</button>
 </div>
+<div class="col-sm-1 col-md-1 col-lg-1"></div>

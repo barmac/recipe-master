@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 
@@ -11,7 +10,7 @@ import { Recipe } from './recipe';
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
-  // styleUrls: ['./recipe-detail.component.css']
+  styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
   @Input() recipe: Recipe;
@@ -30,4 +29,17 @@ export class RecipeDetailComponent implements OnInit {
   save(): void {
     this.recipeService.update(this.recipe).then(recipe => this.recipe = recipe);
   }
+
+  getTime(recipe): string {
+    let result = 'undefined';
+    let minutes = 0;
+    for (let instruction of recipe.instructions) {
+      minutes += instruction.time;
+    }
+    if (minutes > 0) {
+      result = minutes > 60 ? `${Math.floor(minutes / 60)} h ${minutes % 60} min` : `${minutes} min`;
+    }
+    return result;
+  }
+
 }
