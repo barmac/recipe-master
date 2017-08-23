@@ -1,0 +1,33 @@
+.recipes {
+  padding: 0;
+}
+
+.recipe {
+  height: 300px;
+  margin: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: inset -2px -100px 80px -22px rgba(0,0,0,0.78);
+  -moz-box-shadow: inset -2px -100px 80px -22px rgba(0,0,0,0.78);
+  box-shadow: inset -2px -100px 80px -22px rgba(0,0,0,0.78);
+}
+
+.recipe>div {
+  position: relative;
+  top: 225px;
+  left: 10px;
+}
+
+.recipe div .time {
+  color: lightgrey;
+  margin: 0;
+}
+
+.recipe .name {
+  font-size: 25px;
+  margin: 0;
+}
+
+.recipe .name a {
+  color: white;
+}
+

@@ -1,24 +1,20 @@
-<h2>My Recipes</h2>
-<div>
-  <label>Hero name:</label> <input #recipeName />
-  <button (click)="add(recipeName.value); recipeName.value=''">
-    Add
-  </button>
+<div class="col-md-1 col-lg-1"></div>
+<div class="col-xs-12 col-sm-12 col-md-10">
+  <h2>Latest recipes</h2>
+  <div class="container col-xs-12">
+    <div class="recipes col-xs-12 col-sm-6 col-md-4 col-lg-4" *ngFor="let recipe of recipes">
+      <div class="recipe" [ngStyle]="{background: 'url(' + recipe.photoURL + ')',
+           backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}">
+        <div>
+          <p class="time">
+            {{ getTime(recipe) }}
+          </p>
+          <p class="name">
+            <a routerLink="recipe/{{recipe._id}}" routerLinkActive="active">{{ recipe.name }}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<ul class="recipes">
-  <li *ngFor="let recipe of recipes"
-      [class.selected]="recipe === selectedRecipe"
-      (click)="onSelect(recipe)">
-    <a routerLink="recipe/{{recipe._id}}" routerLinkActive="active">
-    <span class="badge">{{recipe._id}}</span> {{recipe.name}}
-    </a>
-    <button class="delete"
-            (click)="remove(recipe); $event.stopPropagation()">x</button>
-  </li>
-</ul>
-<div *ngIf="selectedRecipe">
-  <h2>
-    {{selectedRecipe.name | uppercase}} is my hero
-  </h2>
-  <button (click)="gotoDetail()">View Details</button>
-</div>
+<div class="col-md-1 col-lg-1"></div>

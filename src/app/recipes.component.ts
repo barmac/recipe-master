@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
-  // styleUrls: ['./recipes.component.css'],
+  styleUrls: ['./recipes.component.css'],
   providers: [RecipeService]
 })
 export class RecipesComponent implements OnInit {
@@ -18,20 +18,8 @@ export class RecipesComponent implements OnInit {
     private router: Router,
     private recipeService: RecipeService) { }
 
-  getRecipes(): void {
-    this.recipeService.getRecipes().then(recipes => this.recipes = recipes);
-  }
-
   ngOnInit(): void {
-    this.getRecipes();
-  }
-
-  onSelect(recipe: Recipe): void {
-    this.selectedRecipe = recipe;
-  }
-
-  gotoDetail(): void {
-    this.router.navigate(['/detail', this.selectedRecipe._id]);
+    this.recipeService.getRecipes().then(recipes => this.recipes = recipes);
   }
 
   add(name: string): void {
@@ -40,16 +28,19 @@ export class RecipesComponent implements OnInit {
     this.recipeService.create(name)
       .then(recipe => {
         this.recipes.push(recipe);
-        this.selectedRecipe = null;
       });
   }
 
-  remove(recipe: Recipe): void {
-    this.recipeService
-      .delete(recipe._id)
-      .then(() => {
-        this.recipes = this.recipes.filter(h => h !== recipe);
-        if (this.selectedRecipe === recipe) { this.selectedRecipe = null; }
-      });
+  getTime(recipe): string {
+    let result = 'undefined';
+    let minutes = 0;
+    for (let instruction of recipe.instructions) {
+      minutes += instruction.time;
+    }
+    if (minutes > 0) {
+      result = minutes > 60 ? `${Math.floor(minutes / 60)} hours ${minutes % 60} minutes` : `${minutes} minutes`;
+    }
+    return result;
   }
+
 }
