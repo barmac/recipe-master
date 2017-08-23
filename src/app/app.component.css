@@ -3,6 +3,10 @@
   color: white;
 }
 
+.glyphicon:hover {
+  text-decoration: none;
+}
+
 .navbar {
   background-color: #ffbb00;
   border: none;
