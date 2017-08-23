@@ -1,0 +1,25 @@
+.glyphicon {
+  font-size: 45px;
+  color: white;
+}
+
+.navbar {
+  background-color: #ffbb00;
+  border: none;
+}
+
+.navbar-toggle {
+  border-color: transparent;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+  color: white;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+  border-color: transparent;
+}
+
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+  background-color: inherit;
+}

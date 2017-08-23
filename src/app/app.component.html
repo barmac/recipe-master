@@ -1,9 +1,22 @@
-<h1>{{title}}</h1>
-<nav>
-  <a routerLink="/add-recipe" routerLinkActive="active">Add recipe</a>
-  <a>Sample 1</a>
-  <a>Sample 2</a>
-  <a>Sample 3</a>
-  <a routerLink="/" routerLinkActive="active">Recipes</a>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="glyphicon glyphicon-stop"></span>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a routerLink="/add-recipe" routerLinkActive="active">Add recipe</a></li>
+        <li><a href="#">Sample 1</a></li>
+        <li><a href="#">Sample 2</a></li>
+        <li><a href="#">Sample 3</a></li>
+        <li><a routerLink="/" routerLinkActive="active">Recipes</a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
 <router-outlet></router-outlet>
