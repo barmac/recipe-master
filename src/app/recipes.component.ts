@@ -38,7 +38,7 @@ export class RecipesComponent implements OnInit {
       minutes += instruction.time;
     }
     if (minutes > 0) {
-      result = minutes > 60 ? `${Math.floor(minutes / 60)} hours ${minutes % 60} minutes` : `${minutes} minutes`;
+      result = minutes > 60 ? `${Math.floor(minutes / 60)} h ${minutes % 60} min` : `${minutes} min`;
     }
     return result;
   }
