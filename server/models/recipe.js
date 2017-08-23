@@ -14,7 +14,7 @@ var Recipe = mongoose.model('Recipe', {
   },
   photoURL: {
     type: String,
-    default: null,
+    default: 'https://i.pinimg.com/736x/a3/bb/9d/a3bb9d7e4791220bf19478fb62c63399--drawing-kawaii-food-kawaii-drawings-food-sweets.jpg',
     trim: true
   },
   ingredients: {
