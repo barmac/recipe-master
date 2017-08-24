@@ -34,7 +34,6 @@ var Recipe = mongoose.model('Recipe', {
         trim: true
       }
     }],
-    default: null
   },
   instructions: {
     type: [{

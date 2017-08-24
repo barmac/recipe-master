@@ -7,25 +7,26 @@ import { Recipe } from './recipe';
 
 @Injectable()
 export class RecipeService {
-  private recipesUrl = 'http://localhost:3000/api/recipes';  // URL to web api
+  private recipesUrl = '/api/recipes';  // URL to web api
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }
 
-  create(name: string): Promise<Recipe> {
+  create(recipe: Recipe): Promise<Recipe> {
+    console.log(JSON.stringify(recipe));
     return this.http
-      .post(this.recipesUrl, JSON.stringify({name: name}), {headers: this.headers})
+      .post(this.recipesUrl, JSON.stringify(recipe), {headers: this.headers})
       .toPromise()
       .then(res => res.json() as Recipe)
       .catch(this.handleError);
   }
 
-  update(recipe: Recipe): Promise<Recipe> {
-    const url = `${this.recipesUrl}/${recipe._id}`;
+  update(recipe: Recipe, id: string): Promise<Recipe> {
+    const url = `${this.recipesUrl}/${id}`;
     return this.http
       .put(url, JSON.stringify(recipe), {headers: this.headers})
       .toPromise()
-      .then(() => recipe)
+      .then(res => res.json().recipe as Recipe)
       .catch(this.handleError);
   }
 
