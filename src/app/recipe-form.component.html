@@ -1,7 +1,7 @@
 <div class="container">
-  <h4>
+  <h1>
     Recipe form
-  </h4>
+  </h1>
   <form *ngIf="myForm" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit(myForm)">
     <div class="form-group">
       <label>Name</label>
@@ -22,85 +22,89 @@
     </div>
 
     <div formArrayName="ingredients">
-      <div *ngIf="myForm.controls['ingredients'].controls.length == 0">
-        <button type="button" class="btn btn-primary btn-md" (click)="addIngredient()">
-          Add ingredient
-        </button>
-      </div>
-      <div *ngFor="let ingredient of myForm.controls['ingredients'].controls; let i=index">
+
+      <div class="well well-lg" *ngFor="let ingredient of myForm.controls['ingredients'].controls; let i=index">
         <!-- ingredient header, show remove button when more than one ingredient available -->
-        <div>
-          <span>Ingredient {{i + 1}}</span>
-          <button type="button" class="btn btn-primary btn-md" (click)="removeIngredient(i)">
-            Remove ingredient
-          </button>
+        <div class="form-group">
+          <h3>
+            Ingredient {{i + 1}}
+          </h3>
+          <p>
+            <button type="button" class="btn btn-danger btn-sm" (click)="removeIngredient(i)">
+              Remove ingredient
+            </button>
+          </p>
         </div>
 
         <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
         <div [formGroupName]="i">
-          <div>
+          <div class="form-group">
             <label>Name: </label>
-            <input type="text" formControlName="name">
+            <input class="form-control" type="text" formControlName="name">
             <small [hidden]="myForm.controls['ingredients'].controls[i].controls.name.valid">
               Name is required
             </small>
           </div>
-          <div>
+          <div class="form-group">
             <label>Quantity: </label>
-            <input type="number" formControlName="quantity">
+            <input class="form-control" type="number" formControlName="quantity">
             <small [hidden]="myForm.controls['ingredients'].controls[i].controls.quantity.valid">
               Quantity cannot be less than zero
             </small>
           </div>
-          <div>
+          <div class="form-group">
             <label>Unit: </label>
-            <input type="text" formControlName="unit">
+            <input class="form-control" type="text" formControlName="unit">
           </div>
-          <button type="button" class="btn btn-primary btn-md" (click)="addIngredient()">Add ingredient</button>
         </div>
+      </div>
+
+      <div class="form-group">
+        <button type="button" class="btn btn-success btn-md" (click)="addIngredient()">
+          Add ingredient
+        </button>
       </div>
     </div>
 
     <div formArrayName="instructions">
-      <div *ngIf="myForm.controls['instructions'].controls.length == 0">
-        <button type="button" class="btn btn-primary btn-md" (click)="addInstruction()">
-          Add instruction
-        </button>
-      </div>
-      <div *ngFor="let instruction of myForm.controls['instructions'].controls; let i=index">
-        <div>
-          <span>Instruction {{i + 1}}</span>
-          <button type="button" class="btn btn-primary btn-md" (click)="removeInstruction(i)">
-            Remove instruction
-          </button>
+
+      <div class="well well-lg" *ngFor="let instruction of myForm.controls['instructions'].controls; let i=index">
+        <div class="form-group">
+          <h3>
+            Instruction {{i + 1}}
+          </h3>
+          <p>
+            <button type="button" class="btn btn-danger btn-sm" (click)="removeInstruction(i)">
+              Remove instruction
+            </button>
+          </p>
         </div>
 
         <div [formGroupName]="i">
-          <div>
+          <div class="form-group">
             <label>Name</label>
-            <input type="text" formControlName="name">
+            <input class="form-control" type="text" formControlName="name">
             <small [hidden]="myForm.controls['instructions'].controls[i].controls.name.valid">
               Name is required
             </small>
           </div>
-          <div>
+          <div class="form-group">
             <label>Time (in minutes)</label>
-            <input type="number" formControlName="time">
+            <input class="form-control" type="number" formControlName="time">
             <small [hidden]="myForm.controls['instructions'].controls[i].controls.time.valid">
               Time cannot be less than zero
             </small>
           </div>
-
-          <button type="button" class="btn btn-primary btn-md" (click)="addInstruction()">Add instruction</button>
         </div>
+      </div>
+
+      <div class="form-group">
+        <button type="button" class="btn btn-success btn-md" (click)="addInstruction()">
+          Add instruction
+        </button>
       </div>
     </div>
 
-    <button type="submit" [disabled]="!myForm.valid">Submit</button>
-    <div class="margin-20">
-      <div>myForm details:-</div>
-      <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
-      <pre>form value: <br>{{myForm.value | json}}</pre>
-    </div>
+    <button type="submit" class="btn btn-primary btn-lg" [disabled]="!myForm.valid">Submit</button>
   </form>
 </div>
