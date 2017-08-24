@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 
@@ -13,10 +13,11 @@ import { Recipe } from './recipe';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
-  @Input() recipe: Recipe;
+  recipe: Recipe;
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -26,8 +27,8 @@ export class RecipeDetailComponent implements OnInit {
       .subscribe(recipe => this.recipe = recipe);
   }
 
-  save(): void {
-    this.recipeService.update(this.recipe).then(recipe => this.recipe = recipe);
+  edit(): void {
+    this.router.navigateByUrl(`edit-recipe/${this.recipe._id}`);
   }
 
   getTime(recipe): string {
