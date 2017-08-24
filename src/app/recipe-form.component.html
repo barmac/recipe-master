@@ -1,0 +1,106 @@
+<div class="container">
+  <h4>
+    Recipe form
+  </h4>
+  <form *ngIf="myForm" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit(myForm)">
+    <div class="form-group">
+      <label>Name</label>
+      <input class="form-control" type="text" formControlName="name">
+      <small *ngIf="!myForm.controls.name.valid" class="text-danger">
+        Name is required (minimum 1 character).
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <input class="form-control" type="text" formControlName="desc">
+    </div>
+
+    <div class="form-group">
+      <label>Photo URL</label>
+      <input class="form-control" type="text" formControlName="photoURL">
+    </div>
+
+    <div formArrayName="ingredients">
+      <div *ngIf="myForm.controls['ingredients'].controls.length == 0">
+        <button type="button" class="btn btn-primary btn-md" (click)="addIngredient()">
+          Add ingredient
+        </button>
+      </div>
+      <div *ngFor="let ingredient of myForm.controls['ingredients'].controls; let i=index">
+        <!-- ingredient header, show remove button when more than one ingredient available -->
+        <div>
+          <span>Ingredient {{i + 1}}</span>
+          <button type="button" class="btn btn-primary btn-md" (click)="removeIngredient(i)">
+            Remove ingredient
+          </button>
+        </div>
+
+        <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+        <div [formGroupName]="i">
+          <div>
+            <label>Name: </label>
+            <input type="text" formControlName="name">
+            <small [hidden]="myForm.controls['ingredients'].controls[i].controls.name.valid">
+              Name is required
+            </small>
+          </div>
+          <div>
+            <label>Quantity: </label>
+            <input type="number" formControlName="quantity">
+            <small [hidden]="myForm.controls['ingredients'].controls[i].controls.quantity.valid">
+              Quantity cannot be less than zero
+            </small>
+          </div>
+          <div>
+            <label>Unit: </label>
+            <input type="text" formControlName="unit">
+          </div>
+          <button type="button" class="btn btn-primary btn-md" (click)="addIngredient()">Add ingredient</button>
+        </div>
+      </div>
+    </div>
+
+    <div formArrayName="instructions">
+      <div *ngIf="myForm.controls['instructions'].controls.length == 0">
+        <button type="button" class="btn btn-primary btn-md" (click)="addInstruction()">
+          Add instruction
+        </button>
+      </div>
+      <div *ngFor="let instruction of myForm.controls['instructions'].controls; let i=index">
+        <div>
+          <span>Instruction {{i + 1}}</span>
+          <button type="button" class="btn btn-primary btn-md" (click)="removeInstruction(i)">
+            Remove instruction
+          </button>
+        </div>
+
+        <div [formGroupName]="i">
+          <div>
+            <label>Name</label>
+            <input type="text" formControlName="name">
+            <small [hidden]="myForm.controls['instructions'].controls[i].controls.name.valid">
+              Name is required
+            </small>
+          </div>
+          <div>
+            <label>Time (in minutes)</label>
+            <input type="number" formControlName="time">
+            <small [hidden]="myForm.controls['instructions'].controls[i].controls.time.valid">
+              Time cannot be less than zero
+            </small>
+          </div>
+
+          <button type="button" class="btn btn-primary btn-md" (click)="addInstruction()">Add instruction</button>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!myForm.valid">Submit</button>
+    <div class="margin-20">
+      <div>myForm details:-</div>
+      <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
+      <pre>form value: <br>{{myForm.value | json}}</pre>
+    </div>
+  </form>
+</div>
