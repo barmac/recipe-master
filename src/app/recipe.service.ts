@@ -26,7 +26,7 @@ export class RecipeService {
     return this.http
       .put(url, JSON.stringify(recipe), {headers: this.headers})
       .toPromise()
-      .then(res => res.json().recipe as Recipe)
+      .then(res => res.json() as Recipe)
       .catch(this.handleError);
   }
 
@@ -42,7 +42,7 @@ export class RecipeService {
     const url = `${this.recipesUrl}/${id}`;
     return this.http.get(url, {headers: this.headers})
       .toPromise()
-      .then(response => response.json().recipe as Recipe)
+      .then(res => res.json() as Recipe)
       .catch(this.handleError);
   }
 
@@ -50,8 +50,8 @@ export class RecipeService {
   getRecipes(): Promise<Recipe[]> {
     return this.http.get(this.recipesUrl, {headers: this.headers})
       .toPromise()
-      .then(response => {
-        return response.json().recipes as Recipe[];
+      .then(res => {
+        return res.json() as Recipe[];
       })
       .catch(this.handleError);
   }

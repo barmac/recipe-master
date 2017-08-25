@@ -14,7 +14,7 @@ mongoose.connect('mongodb://localhost:27017/RecipeMaster', {
 // Get recipes
 router.get('/recipes', (req, res) => {
   Recipe.find().then((recipes) => {
-    res.send({recipes});
+    res.send(recipes);
   }).catch((e) => {
     res.status(400).send(e);
   });
@@ -23,8 +23,8 @@ router.get('/recipes', (req, res) => {
 // Post recipe
 router.post('/recipes', (req, res) => {
   let recipe = new Recipe(req.body);
-  recipe.save().then((doc) => {
-    res.send(doc);
+  recipe.save().then((recipe) => {
+    res.send(recipe);
   }).catch((e) => {
     res.status(400).send(e);
   });
@@ -41,7 +41,7 @@ router.put('/recipes/:id', (req, res) => {
       if (!recipe) {
         res.status(404).send({});
       } else {
-        res.send({recipe});
+        res.send(recipe);
       }
     }).catch((e) => {
       res.status(400).send(e);
@@ -59,7 +59,7 @@ router.delete('/recipes/:id', (req, res) => {
       if (!recipe) {
         res.status(404).send({});
       } else {
-        res.send({recipe});
+        res.send(recipe);
       }
     }).catch((e) => {
       res.status(400).send(e);
@@ -77,7 +77,7 @@ router.get('/recipes/:id', (req, res) => {
       if (!recipe) {
         res.status(404).send({});
       } else {
-        res.send({recipe});
+        res.send(recipe);
       }
     }).catch((e) => {
       res.status(400).send(e);
