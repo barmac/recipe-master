@@ -1,3 +1,5 @@
+require('./server/config/config');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -23,7 +25,7 @@ app.get('*', (req, res) => {
 });
 
 //Set Port
-const port = process.env.PORT || '3000';
+const port = process.env.PORT;
 app.set('port', port);
 
 const server = http.createServer(app);
