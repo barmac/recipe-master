@@ -25,7 +25,7 @@ router.post('/users', (req, res) => {
   });
 });
 
-// TODO Login
+// Login
 router.post('/users/login', (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
@@ -44,15 +44,6 @@ router.post('/users/login', (req, res) => {
     })
     .catch((e) => {
       res.status(400).send(e);
-  });
-});
-
-// Get all users (debugging only)
-router.get('/users', (req, res) => {
-  User.find().then((users) => {
-    res.send(users);
-  }).catch((e) => {
-    res.status(400).send(e);
   });
 });
 
