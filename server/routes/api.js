@@ -4,6 +4,7 @@ const ObjectID = require('mongodb').ObjectID;
 const passport = require('./../config/passport');
 const _ = require('lodash');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const {Recipe} = require('./../models/recipe');
 const User = require('./../models/user');
 
@@ -25,6 +26,26 @@ router.post('/users', (req, res) => {
 });
 
 // TODO Login
+router.post('/users/login', (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+  let user;
+  User.findOne({username})
+    .then((foundUser) => {
+      user = foundUser;
+      return user.comparePassword(password);
+    })
+    .then((result) => {
+      if (result) {
+        res.send({token: user.generateAuthToken()});
+      } else {
+        res.status(401).send({});
+      }
+    })
+    .catch((e) => {
+      res.status(400).send(e);
+  });
+});
 
 // Get all users (debugging only)
 router.get('/users', (req, res) => {

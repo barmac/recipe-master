@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const {jwtOptions} = require('./../config/auth');
+const {secret, saltRounds, expiresIn} = require('./../config/auth');
 
 const UserSchema = new Schema({
   username: {
@@ -21,7 +21,7 @@ const UserSchema = new Schema({
 
 UserSchema.methods.generateAuthToken = function () {
   let user = this;
-  return jwt.sign({_id: user._id.toHexString()}, secret);
+  return jwt.sign({_id: user._id.toHexString()}, secret, {expiresIn});
 };
 
 UserSchema.methods.comparePassword = function (candidatePassword) {
@@ -32,11 +32,9 @@ UserSchema.methods.comparePassword = function (candidatePassword) {
 UserSchema.pre('save', function (next) {
   let user = this;
   if (user.isModified('password')) {
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(user.password, salt, (err, hash) => {
+    bcrypt.hash(user.password, saltRounds).then(function(hash) {
         user.password = hash;
         next();
-      })
     });
   } else {
     next();
