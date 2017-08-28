@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
+const passport =  require('./server/config/passport');
 const app = express();
 
 // API file for interacting with MongoDB
@@ -12,6 +13,9 @@ const api = require('./server/routes/api');
 // Parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
+
+// Auth
+app.use(passport.initialize());
 
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist')));

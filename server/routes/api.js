@@ -1,13 +1,38 @@
 const express = require('express');
 const router = express.Router();
 const ObjectID = require('mongodb').ObjectID;
-let mongoose = require('mongoose');
-let {Recipe} = require('./../models/recipe');
+const passport = require('./../config/passport');
+const _ = require('lodash');
+const mongoose = require('mongoose');
+const {Recipe} = require('./../models/recipe');
+const User = require('./../models/user');
 
 // Connect
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, {
   useMongoClient: true
+});
+
+// User API
+// Register user
+router.post('/users', (req, res) => {
+  let user = new User(_.pick(req.body, ['username', 'password']));
+  user.save().then((user) => {
+    res.send(user);
+  }).catch((e) => {
+    res.status(400).send(e);
+  });
+});
+
+// TODO Login
+
+// Get all users (debugging only)
+router.get('/users', (req, res) => {
+  User.find().then((users) => {
+    res.send(users);
+  }).catch((e) => {
+    res.status(400).send(e);
+  });
 });
 
 // Recipe API
@@ -21,7 +46,7 @@ router.get('/recipes', (req, res) => {
 });
 
 // Post recipe
-router.post('/recipes', (req, res) => {
+router.post('/recipes', passport.authenticate('jwt', { session: false }), (req, res) => {
   let recipe = new Recipe(req.body);
   recipe.save().then((recipe) => {
     res.send(recipe);
@@ -31,7 +56,7 @@ router.post('/recipes', (req, res) => {
 });
 
 // Update recipe
-router.put('/recipes/:id', (req, res) => {
+router.put('/recipes/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
   let id = req.params.id;
   let recipe = req.body;
   if (!ObjectID.isValid(id)) {
@@ -50,7 +75,7 @@ router.put('/recipes/:id', (req, res) => {
 });
 
 // Delete recipe
-router.delete('/recipes/:id', (req, res) => {
+router.delete('/recipes/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
   let id = req.params.id;
   if (!ObjectID.isValid(id)) {
     res.status(404).send({});
