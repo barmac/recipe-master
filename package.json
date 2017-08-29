@@ -4,7 +4,6 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "preinstall": "npm i",
     "postinstall": "ng build --prod",
     "start": "node server",
     "build": "ng build",
