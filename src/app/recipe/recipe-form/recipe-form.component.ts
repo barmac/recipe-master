@@ -5,6 +5,7 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {RecipeService} from '../recipe.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlertService} from '../../alert/alert.service';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-recipe-form',
@@ -22,7 +23,8 @@ export class RecipeFormComponent implements OnInit {
     private recipeService: RecipeService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private alertService: AlertService) {}
+    private alertService: AlertService,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
@@ -109,14 +111,20 @@ export class RecipeFormComponent implements OnInit {
     if (this.edit) {
       this.recipeService.update(form.value, this.id)
         .then((newRecipe) => this.router.navigateByUrl(`recipe/${newRecipe._id}`))
-        .catch((e) => {
-          this.alertService.error(e);
+        .catch((error) => {
+          this.alertService.error(error);
+          if (error.status === 401) {
+            this.router.navigate(['/login']);
+          }
         });
     } else {
       this.recipeService.create(form.value)
         .then((newRecipe) => this.router.navigateByUrl(`recipe/${newRecipe._id}`))
-        .catch((e) => {
-          this.alertService.error(e);
+        .catch((error) => {
+          this.alertService.error(error);
+          if (error.status === 401) {
+            this.router.navigate(['/login']);
+          }
         });
     }
   }

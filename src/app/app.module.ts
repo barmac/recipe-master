@@ -14,6 +14,10 @@ import {RecipeFormComponent} from './recipe/recipe-form/recipe-form.component';
 import {AlertComponent} from './alert/alert.component';
 import {AlertService} from './alert/alert.service';
 import {AuthGuard} from './auth/auth.guard';
+import {RegisterComponent} from './user/register/register.component';
+import {LoginComponent} from './user/login/login.component';
+import {UserService} from './user/user.service';
+import {AuthService} from './auth/auth.service';
 
 @NgModule({
   imports: [
@@ -28,12 +32,16 @@ import {AuthGuard} from './auth/auth.guard';
     RecipesComponent,
     RecipeDetailComponent,
     RecipeFormComponent,
-    AlertComponent
+    AlertComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   providers: [
     RecipeService,
     AlertService,
-    AuthGuard
+    AuthGuard,
+    UserService,
+    AuthService
   ],
   bootstrap: [ AppComponent ]
 })
