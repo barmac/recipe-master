@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 
-import { RecipeService } from './recipe.service';
-import { Recipe } from './recipe';
+import { RecipeService } from '../recipe.service';
+import { Recipe } from '../recipe';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class RecipeDetailComponent implements OnInit {
   getTime(recipe): string {
     let result = 'undefined';
     let minutes = 0;
-    for (let instruction of recipe.instructions) {
+    for (const instruction of recipe.instructions) {
       minutes += instruction.time;
     }
     if (minutes > 0) {

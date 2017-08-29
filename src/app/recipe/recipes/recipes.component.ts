@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { Recipe } from './recipe';
-import { RecipeService } from './recipe.service';
-import {Router} from '@angular/router';
+import { Recipe } from '../recipe';
+import { RecipeService } from '../recipe.service';
 
 
 @Component({
@@ -23,7 +22,7 @@ export class RecipesComponent implements OnInit {
   getTime(recipe): string {
     let result = 'undefined';
     let minutes = 0;
-    for (let instruction of recipe.instructions) {
+    for (const instruction of recipe.instructions) {
       minutes += instruction.time;
     }
     if (minutes > 0) {

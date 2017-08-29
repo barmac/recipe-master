@@ -13,7 +13,6 @@ export class RecipeService {
   constructor(private http: Http) { }
 
   create(recipe: Recipe): Promise<Recipe> {
-    console.log(JSON.stringify(recipe));
     return this.http
       .post(this.recipesUrl, JSON.stringify(recipe), {headers: this.headers})
       .toPromise()

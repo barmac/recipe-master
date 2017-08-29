@@ -7,10 +7,10 @@ import { AppComponent } from './app.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import {RecipesComponent} from './recipes.component';
-import {RecipeService} from './recipe.service';
-import {RecipeDetailComponent} from './recipe-detail.component';
-import {RecipeFormComponent} from './recipe-form.component';
+import {RecipesComponent} from './recipe/recipes/recipes.component';
+import {RecipeService} from './recipe/recipe.service';
+import {RecipeDetailComponent} from './recipe/recipe-detail/recipe-detail.component';
+import {RecipeFormComponent} from './recipe/recipe-form/recipe-form.component';
 
 @NgModule({
   imports: [
