@@ -11,6 +11,8 @@ import {RecipesComponent} from './recipe/recipes/recipes.component';
 import {RecipeService} from './recipe/recipe.service';
 import {RecipeDetailComponent} from './recipe/recipe-detail/recipe-detail.component';
 import {RecipeFormComponent} from './recipe/recipe-form/recipe-form.component';
+import {AlertComponent} from './alert/alert.component';
+import {AlertService} from './alert/alert.service';
 
 @NgModule({
   imports: [
@@ -24,9 +26,13 @@ import {RecipeFormComponent} from './recipe/recipe-form/recipe-form.component';
     AppComponent,
     RecipesComponent,
     RecipeDetailComponent,
-    RecipeFormComponent
+    RecipeFormComponent,
+    AlertComponent
   ],
-  providers: [ RecipeService ],
+  providers: [
+    RecipeService,
+    AlertService
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

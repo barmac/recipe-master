@@ -4,6 +4,7 @@ import { Recipe } from '../recipe';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {RecipeService} from '../recipe.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AlertService} from '../../alert/alert.service';
 
 @Component({
   selector: 'app-recipe-form',
@@ -20,7 +21,8 @@ export class RecipeFormComponent implements OnInit {
     private router: Router,
     private recipeService: RecipeService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder) {}
+    private formBuilder: FormBuilder,
+    private alertService: AlertService) {}
 
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
@@ -106,12 +108,16 @@ export class RecipeFormComponent implements OnInit {
   onSubmit(form: FormGroup) {
     if (this.edit) {
       this.recipeService.update(form.value, this.id)
-        .then((newRecipe) => {
-        return this.router.navigateByUrl(`recipe/${newRecipe._id}`);
+        .then((newRecipe) => this.router.navigateByUrl(`recipe/${newRecipe._id}`))
+        .catch((e) => {
+          this.alertService.error(e);
         });
     } else {
       this.recipeService.create(form.value)
-        .then((newRecipe) => this.router.navigateByUrl(`recipe/${newRecipe._id}`));
+        .then((newRecipe) => this.router.navigateByUrl(`recipe/${newRecipe._id}`))
+        .catch((e) => {
+          this.alertService.error(e);
+        });
     }
   }
 }

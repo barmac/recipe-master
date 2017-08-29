@@ -16,8 +16,7 @@ export class RecipeService {
     return this.http
       .post(this.recipesUrl, JSON.stringify(recipe), {headers: this.headers})
       .toPromise()
-      .then(res => res.json() as Recipe)
-      .catch(this.handleError);
+      .then(res => res.json() as Recipe);
   }
 
   update(recipe: Recipe, id: string): Promise<Recipe> {
@@ -25,38 +24,27 @@ export class RecipeService {
     return this.http
       .put(url, JSON.stringify(recipe), {headers: this.headers})
       .toPromise()
-      .then(res => res.json() as Recipe)
-      .catch(this.handleError);
+      .then(res => res.json() as Recipe);
   }
 
   delete(id: string): Promise<void> {
     const url = `${this.recipesUrl}/${id}`;
     return this.http.delete(url, {headers: this.headers})
       .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+      .then(() => null);
   }
 
   getRecipe(id: string): Promise<Recipe> {
     const url = `${this.recipesUrl}/${id}`;
     return this.http.get(url, {headers: this.headers})
       .toPromise()
-      .then(res => res.json() as Recipe)
-      .catch(this.handleError);
+      .then(res => res.json() as Recipe);
   }
 
 
   getRecipes(): Promise<Recipe[]> {
     return this.http.get(this.recipesUrl, {headers: this.headers})
       .toPromise()
-      .then(res => {
-        return res.json() as Recipe[];
-      })
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
+      .then(res => res.json() as Recipe[]);
   }
 }
