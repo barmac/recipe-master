@@ -1,3 +1,4 @@
+const config = require('./../config/config');
 const express = require('express');
 const router = express.Router();
 const ObjectID = require('mongodb').ObjectID;
@@ -9,7 +10,7 @@ const User = require('./../models/user');
 
 // Connect
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(config.mongodbUri, {
   useMongoClient: true
 });
 

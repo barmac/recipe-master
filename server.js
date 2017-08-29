@@ -1,4 +1,4 @@
-require('./server/config/config');
+const config = require('./server/config/config');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -29,9 +29,8 @@ app.get('*', (req, res) => {
 });
 
 //Set Port
-const port = process.env.PORT;
-app.set('port', port);
+app.set('port', config.port);
 
 const server = http.createServer(app);
 
-server.listen(port, () => console.log(`Running on localhost:${port}`));
+server.listen(config.port, () => console.log(`Running on localhost:${config.port}`));
