@@ -5,7 +5,7 @@ const ObjectID = require('mongodb').ObjectID;
 const passport = require('./../config/passport');
 const _ = require('lodash');
 const mongoose = require('mongoose');
-const {Recipe} = require('./../models/recipe');
+const Recipe = require('./../models/recipe');
 const User = require('./../models/user');
 
 // Connect
