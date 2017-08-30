@@ -24,12 +24,9 @@
 }
 
 .recipe>div .recipe-name {
+  color: white;
   font-size: 25px;
   margin: 0;
-}
-
-.recipe>div .recipe-name a {
-  color: white;
 }
 
 .public {
