@@ -36,7 +36,8 @@ export class RecipeFormComponent implements OnInit {
         this.myForm.patchValue({
           name: this.recipe.name,
           desc: this.recipe.desc,
-          photoURL: this.recipe.photoURL
+          photoURL: this.recipe.photoURL,
+          restricted: this.recipe.restricted
         });
         this.recipe.instructions.forEach(item => {
           const instructions = this.formBuilder.group({
@@ -68,7 +69,8 @@ export class RecipeFormComponent implements OnInit {
       ingredients: this.formBuilder.array([
       ]),
       instructions: this.formBuilder.array([
-      ])
+      ]),
+      restricted: false
     });
   }
 

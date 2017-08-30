@@ -8,4 +8,6 @@ export class Recipe {
   photoURL: string;
   ingredients: Array<Ingredient>;
   instructions: Array<Instruction>;
+  owner: string;
+  restricted: boolean;
 }
