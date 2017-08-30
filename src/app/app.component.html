@@ -12,9 +12,9 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a routerLink="/add-recipe" routerLinkActive="active">Add recipe</a></li>
         <li><a routerLink="/" routerLinkActive="active">Recipes</a></li>
-        <li *ngIf="!authService.jwt()"><a routerLink="/login" routerLinkActive="active">Login</a></li>
-        <li *ngIf="!authService.jwt()"><a routerLink="/register" routerLinkActive="active">Register</a></li>
-        <li *ngIf="authService.jwt()"><a routerLink="/" routerLinkActive="active" (click)="authService.logout()">Logout</a></li>
+        <li *ngIf="!authService.jwt()"><a routerLink="/login" routerLinkActive="active">Sign in</a></li>
+        <li *ngIf="!authService.jwt()"><a routerLink="/register" routerLinkActive="active">Sign up</a></li>
+        <li *ngIf="authService.jwt()"><a routerLink="/" routerLinkActive="active" (click)="authService.logout()">Sign out</a></li>
       </ul>
     </div>
   </div>
