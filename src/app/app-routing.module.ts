@@ -9,7 +9,7 @@ import {LoginComponent} from './user/login/login.component';
 import {RegisterComponent} from './user/register/register.component';
 
 const routes: Routes = [
-  { path: '', component: RecipesComponent },
+  { path: '', component: RecipesComponent, canActivate: [AuthGuard] },
   { path: 'recipe/:id', component: RecipeDetailComponent, canActivate: [AuthGuard] },
   { path: 'add-recipe', component: RecipeFormComponent, canActivate: [AuthGuard] },
   { path: 'edit-recipe/:id', component: RecipeFormComponent, canActivate: [AuthGuard] },

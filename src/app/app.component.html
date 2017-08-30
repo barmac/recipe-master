@@ -14,7 +14,7 @@
         <li><a routerLink="/" routerLinkActive="active">Recipes</a></li>
         <li *ngIf="!authService.jwt()"><a routerLink="/login" routerLinkActive="active">Sign in</a></li>
         <li *ngIf="!authService.jwt()"><a routerLink="/register" routerLinkActive="active">Sign up</a></li>
-        <li *ngIf="authService.jwt()"><a routerLink="/" routerLinkActive="active" (click)="authService.logout()">Sign out</a></li>
+        <li *ngIf="authService.jwt()"><a (click)="authService.logout()">Sign out</a></li>
       </ul>
     </div>
   </div>

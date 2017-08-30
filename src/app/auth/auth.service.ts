@@ -2,10 +2,14 @@
 import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {User} from '../user/user';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
-    constructor(private http: Http) { }
+    constructor(
+      private http: Http,
+      private router: Router
+    ) { }
     private headers = new Headers({'Content-Type': 'application/json'});
 
     login(user: User) {
@@ -20,12 +24,11 @@ export class AuthService {
     }
 
     logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('token');
+      localStorage.removeItem('token');
+      this.router.navigate(['/login']);
     }
 
     jwt() {
-      const token = JSON.parse(localStorage.getItem('token'));
-      return token;
+      return JSON.parse(localStorage.getItem('token'));
     }
 }
