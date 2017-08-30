@@ -7,7 +7,7 @@ const User = require('./../models/user');
 router.post('/', (req, res) => {
   let user = new User(_.pick(req.body, ['username', 'password']));
   user.save().then((user) => {
-    res.send(user);
+    res.send({});
   }).catch((e) => {
     res.status(400).send(e);
   });
