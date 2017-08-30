@@ -17,17 +17,18 @@
   left: 10px;
 }
 
-.recipe div .time {
+.recipe>div .recipe-time {
   color: lightgrey;
   margin: 0;
+  height: 20px;
 }
 
-.recipe .name {
+.recipe>div .recipe-name {
   font-size: 25px;
   margin: 0;
 }
 
-.recipe .name a {
+.recipe>div .recipe-name a {
   color: white;
 }
 

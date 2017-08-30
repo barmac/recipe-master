@@ -67,4 +67,16 @@ export class RecipeService {
       .toPromise()
       .then(res => res.json() as Recipe[]);
   }
+
+  getTime(recipe): string {
+    let result = '';
+    let minutes = 0;
+    for (const instruction of recipe.instructions) {
+      minutes += instruction.time;
+    }
+    if (minutes > 0) {
+      result = minutes > 60 ? `${Math.floor(minutes / 60)} h ${minutes % 60} min` : `${minutes} min`;
+    }
+    return result;
+  }
 }

@@ -6,10 +6,10 @@
       <div class="recipe" [ngStyle]="{background: 'url(' + recipe.photoURL + ')',
            backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}">
         <div>
-          <p class="time">
-            {{ getTime(recipe) }}
+          <p class="recipe-time">
+            {{ recipeService.getTime(recipe) }}
           </p>
-          <p class="name">
+          <p class="recipe-name">
             <a routerLink="recipe/{{recipe._id}}" routerLinkActive="active">{{ recipe.name }}</a>
           </p>
         </div>

@@ -15,10 +15,9 @@ import { Recipe } from '../recipe';
 export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
   constructor(
-    private recipeService: RecipeService,
+    public recipeService: RecipeService,
     private route: ActivatedRoute,
-    private router: Router,
-  ) {}
+    private router: Router) {}
 
   ngOnInit(): void {
     this.route.paramMap
@@ -30,17 +29,4 @@ export class RecipeDetailComponent implements OnInit {
   edit(): void {
     this.router.navigateByUrl(`edit-recipe/${this.recipe._id}`);
   }
-
-  getTime(recipe): string {
-    let result = 'undefined';
-    let minutes = 0;
-    for (const instruction of recipe.instructions) {
-      minutes += instruction.time;
-    }
-    if (minutes > 0) {
-      result = minutes > 60 ? `${Math.floor(minutes / 60)} h ${minutes % 60} min` : `${minutes} min`;
-    }
-    return result;
-  }
-
 }
