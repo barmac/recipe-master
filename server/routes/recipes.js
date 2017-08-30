@@ -7,6 +7,8 @@ const {ObjectID} = require('mongodb');
 const Recipe = require('./../models/recipe');
 
 const editableProperties = (body) => _.pick(body, ['name', 'desc', 'photoURL', 'ingredients', 'instructions', 'restricted']);
+const currUserId = (header) => jwt.decode(header.substr(7), {json: true})._id;
+
 
 // Get recipes
 router.get('/', (req, res) => {
@@ -20,9 +22,8 @@ router.get('/', (req, res) => {
 // Post recipe
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   let recipe = new Recipe(editableProperties(req.body));
-  const token = req.header('Authorization').substr(7);
-  const decodedJwt = jwt.decode(token, {json: true});
-  recipe.owner = decodedJwt._id;
+  const userId = currUserId(req.header('Authorization'));
+  recipe.owner = userId;
   recipe.save().then((recipe) => {
     res.send(recipe);
   }).catch((e) => {
@@ -33,15 +34,20 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 // Update recipe
 router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
   let id = req.params.id;
-  let recipe = editableProperties(req.body);
+  let recipeUpdate = editableProperties(req.body);
+  const userId = currUserId(req.header('Authorization'));
   if (!ObjectID.isValid(id)) {
     res.status(404).send({});
   } else {
-    Recipe.findByIdAndUpdate(id, recipe, {new: true}).then((recipe) => {
+    Recipe.findById(id).then((recipe) => {
       if (!recipe) {
         res.status(404).send({});
       } else {
-        res.send(recipe);
+        if (recipe.owner !== userId) {
+          res.status(403).send({})
+        } else {
+          recipe.update(recipeUpdate, () => res.send(recipe));
+        }
       }
     }).catch((e) => {
       res.status(400).send(e);
