@@ -11,8 +11,15 @@ const currUserId = (header) => jwt.decode(header.substr(7), {json: true})._id;
 
 
 // Get recipes
-router.get('/', (req, res) => {
-  Recipe.find().then((recipes) => {
+router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+  const userId = currUserId(req.header('Authorization'));
+  Recipe.find()
+    .or([
+    {restricted: false},
+    {restricted: true, owner: userId}
+    ])
+    .sort('restricted')
+    .then((recipes) => {
     res.send(recipes);
   }).catch((e) => {
     res.status(400).send(e);
@@ -20,7 +27,7 @@ router.get('/', (req, res) => {
 });
 
 // Post recipe
-router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   let recipe = new Recipe(editableProperties(req.body));
   const userId = currUserId(req.header('Authorization'));
   recipe.owner = userId;
@@ -32,7 +39,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 });
 
 // Update recipe
-router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.put('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   let id = req.params.id;
   let recipeUpdate = editableProperties(req.body);
   const userId = currUserId(req.header('Authorization'));
@@ -56,7 +63,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 });
 
 // Delete recipe
-router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   let id = req.params.id;
   if (!ObjectID.isValid(id)) {
     res.status(404).send({});
@@ -74,7 +81,7 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, re
 });
 
 // Get recipe
-router.get('/:id', (req, res) => {
+router.get('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   let id = req.params.id;
   if (!ObjectID.isValid(id)) {
     res.status(404).send({});
