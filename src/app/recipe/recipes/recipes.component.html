@@ -3,7 +3,8 @@
   <div class="container col-xs-12">
     <div class="recipes col-xs-12 col-sm-6 col-md-4 col-lg-4" *ngFor="let recipe of recipes">
       <div class="recipe" [ngStyle]="{background: 'url(' + recipe.photoURL + ')',
-           backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}">
+            backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}"
+            [ngClass]="{'public': !recipe.restricted}">
         <div>
           <p class="recipe-time">
             {{ recipeService.getTime(recipe) }}

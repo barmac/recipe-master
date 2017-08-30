@@ -32,3 +32,6 @@
   color: white;
 }
 
+.public {
+  border: solid 4px #ffbb00;
+}
