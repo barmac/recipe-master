@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="col-xs-12 col-md-5">
-        <button class="btn btn-default btn-md" (click)="edit()">Edit</button>
+        <button class="btn btn-default btn-md" *ngIf="authService.userId()===recipe.owner" (click)="edit()">Edit</button>
         <h3>
           Ingredients
         </h3>

@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 import { RecipeService } from '../recipe.service';
 import { Recipe } from '../recipe';
+import {AuthService} from '../../auth/auth.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
   constructor(
     public recipeService: RecipeService,
+    public authService: AuthService,
     private route: ActivatedRoute,
     private router: Router) {}
 
