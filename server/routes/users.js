@@ -25,7 +25,7 @@ router.post('/login', (req, res) => {
     })
     .then((result) => {
       if (result) {
-        res.send({token: user.generateAuthToken()});
+        res.send({token: user.generateAuthToken(), id: user._id.toString()});
       } else {
         res.status(401).send({});
       }

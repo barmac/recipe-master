@@ -12,13 +12,4 @@ export class UserService {
   create(user: User) {
     return this.http.post('/api/users', user, this.headers).map((response: Response) => response.json());
   }
-
-  private jwt() {
-    // create authorization header with jwt token
-    const token = JSON.parse(localStorage.getItem('token'));
-    if (token) {
-      let headers = new Headers({ 'Authorization': 'Bearer ' + token });
-      return new RequestOptions({ headers: headers });
-    }
-  }
 }

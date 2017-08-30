@@ -18,17 +18,23 @@ export class AuthService {
                 // login successful if there's a jwt token in the response
                 const res = response.json();
                 if (res && res.token) {
-                    localStorage.setItem('token', JSON.stringify(res.token));
+                    localStorage.setItem('currentUser', JSON.stringify({token: res.token, id: res.id}));
                 }
             });
     }
 
     logout() {
-      localStorage.removeItem('token');
+      localStorage.removeItem('currentUser');
       this.router.navigate(['/login']);
     }
 
     jwt() {
-      return JSON.parse(localStorage.getItem('token'));
+      const storage = JSON.parse(localStorage.getItem('currentUser'));
+      return storage ? storage.token : null;
+    }
+
+    userId() {
+      const storage = JSON.parse(localStorage.getItem('currentUser'));
+      return storage ? storage.id : null;
     }
 }
