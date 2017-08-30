@@ -9,19 +9,19 @@ const RecipeSchema = new mongoose.Schema({
   },
   desc: {
     type: String,
-    default: "",
+    default: '',
     trim: true
   },
   photoURL: {
     type: String,
-    default: 'https://i.pinimg.com/736x/a3/bb/9d/a3bb9d7e4791220bf19478fb62c63399--drawing-kawaii-food-kawaii-drawings-food-sweets.jpg',
+    default: '',
     trim: true
   },
   ingredients: {
     type: [{
       name: {
         type: String,
-        default: "",
+        default: '',
         trim: true
       },
       quantity: {
@@ -30,7 +30,7 @@ const RecipeSchema = new mongoose.Schema({
       },
       unit: {
         type: String,
-        default: "",
+        default: '',
         trim: true
       }
     }],
@@ -39,7 +39,7 @@ const RecipeSchema = new mongoose.Schema({
     type: [{
       name: {
         type: String,
-        default: "",
+        default: '',
         trim: true
       },
       time: {
@@ -47,6 +47,14 @@ const RecipeSchema = new mongoose.Schema({
         default: null
       }
     }]
+  },
+  owner: {
+    type: String,
+    default: ''
+  },
+  restricted: {
+    type: Boolean,
+    default: false
   }
 });
 

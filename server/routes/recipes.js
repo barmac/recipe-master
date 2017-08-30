@@ -1,8 +1,12 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 const router = express.Router();
 const passport = require('./../config/passport');
 const {ObjectID} = require('mongodb');
 const Recipe = require('./../models/recipe');
+
+const editableProperties = (body) => _.pick(body, ['name', 'desc', 'photoURL', 'ingredients', 'instructions', 'restricted']);
 
 // Get recipes
 router.get('/', (req, res) => {
@@ -15,7 +19,10 @@ router.get('/', (req, res) => {
 
 // Post recipe
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-  let recipe = new Recipe(req.body);
+  let recipe = new Recipe(editableProperties(req.body));
+  const token = req.header('Authorization').substr(7);
+  const decodedJwt = jwt.decode(token, {json: true});
+  recipe.owner = decodedJwt._id;
   recipe.save().then((recipe) => {
     res.send(recipe);
   }).catch((e) => {
@@ -26,7 +33,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 // Update recipe
 router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
   let id = req.params.id;
-  let recipe = req.body;
+  let recipe = editableProperties(req.body);
   if (!ObjectID.isValid(id)) {
     res.status(404).send({});
   } else {
