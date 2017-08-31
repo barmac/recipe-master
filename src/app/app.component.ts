@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthService} from './auth/auth.service';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,7 @@ import {AuthService} from './auth/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(public authService: AuthService) {}
+  constructor(
+    public authService: AuthService,
+    db: AngularFireDatabase) {}
 }

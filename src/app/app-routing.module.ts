@@ -7,6 +7,7 @@ import {RecipeFormComponent} from './recipe/recipe-form/recipe-form.component';
 import {AuthGuard} from './auth/auth.guard';
 import {LoginComponent} from './user/login/login.component';
 import {RegisterComponent} from './user/register/register.component';
+import {UploadFormComponent} from './uploads/upload-form/upload-form.component';
 
 const routes: Routes = [
   { path: '', component: RecipesComponent, canActivate: [AuthGuard] },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'edit-recipe/:id', component: RecipeFormComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'upload', component: UploadFormComponent },
   { path: '**', redirectTo: '' }
 ];
 

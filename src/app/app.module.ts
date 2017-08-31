@@ -18,6 +18,12 @@ import {RegisterComponent} from './user/register/register.component';
 import {LoginComponent} from './user/login/login.component';
 import {UserService} from './user/user.service';
 import {AuthService} from './auth/auth.service';
+import { UploadFormComponent } from './uploads/upload-form/upload-form.component';
+
+import { environment } from '../environments/environment';
+import {AngularFireModule} from 'angularfire2';
+import {AngularFireDatabaseModule} from 'angularfire2/database';
+import {UploadService} from './uploads/shared/upload.service';
 
 @NgModule({
   imports: [
@@ -25,7 +31,9 @@ import {AuthService} from './auth/auth.service';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
   ],
   declarations: [
     AppComponent,
@@ -34,14 +42,16 @@ import {AuthService} from './auth/auth.service';
     RecipeFormComponent,
     AlertComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    UploadFormComponent
   ],
   providers: [
     RecipeService,
     AlertService,
     AuthGuard,
     UserService,
-    AuthService
+    AuthService,
+    UploadService
   ],
   bootstrap: [ AppComponent ]
 })
