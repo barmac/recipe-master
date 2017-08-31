@@ -5,10 +5,13 @@
   Progress: {{currentUpload?.name}} | {{currentUpload?.progress}}% Complete
 </div>
 <label>
-  <input type="file" (change)="detectFiles($event)">
+  <input type="file" class="form-control" (change)="detectFiles($event)">
 </label>
-<button
+<button class="btn btn-sm btn-primary"
   [disabled]="!selectedFiles"
-  (click)="uploadSingle()">
-  Upload Single
+  (click)="upload()">
+  Upload
+</button>
+<button class="btn btn-sm btn-primary" (click)="copy()">
+  Copy as photo URL
 </button>

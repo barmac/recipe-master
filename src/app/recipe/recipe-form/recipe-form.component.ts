@@ -109,6 +109,12 @@ export class RecipeFormComponent implements OnInit {
     control.removeAt(i);
   }
 
+  onUpload(url: string) {
+    this.myForm.patchValue({
+      photoURL: url
+    });
+  }
+
   onSubmit(form: FormGroup) {
     if (this.edit) {
       this.recipeService.update(form.value, this.id)

@@ -21,6 +21,10 @@
       <input class="form-control" type="text" formControlName="photoURL">
     </div>
 
+    <div class="form-group">
+      <app-upload-form (onUpload)="onUpload($event)"></app-upload-form>
+    </div>
+
     <div formArrayName="ingredients">
 
       <div class="well well-lg" *ngFor="let ingredient of myForm.controls['ingredients'].controls; let i=index">

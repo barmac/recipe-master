@@ -16,7 +16,6 @@ const routes: Routes = [
   { path: 'edit-recipe/:id', component: RecipeFormComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'upload', component: UploadFormComponent },
   { path: '**', redirectTo: '' }
 ];
 
