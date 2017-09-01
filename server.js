@@ -3,7 +3,6 @@ const config = require('./server/config/config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const http = require('http');
 const passport =  require('./server/config/passport');
 const app = express();
 
@@ -31,6 +30,6 @@ app.get('*', (req, res) => {
 //Set Port
 app.set('port', config.port);
 
-const server = http.createServer(app);
+app.listen(config.port, () => console.log(`Running on localhost:${config.port}`));
 
-server.listen(config.port, () => console.log(`Running on localhost:${config.port}`));
+module.exports = app;
