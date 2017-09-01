@@ -54,7 +54,7 @@ router.put('/:id', passport.authenticate('jwt', {session: false}), (req, res) =>
           if (recipe.owner !== userId) {
             res.status(403).send({})
           } else {
-            return Recipe.findByIdAndUpdate(recipe._id, recipeUpdate, {new: true, runValidators: true})
+            return Recipe.findByIdAndUpdate(recipe._id, recipeUpdate, {new: true, runValidators: true});
           }
         }
       })
@@ -68,16 +68,24 @@ router.put('/:id', passport.authenticate('jwt', {session: false}), (req, res) =>
 // Delete recipe
 router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   let id = req.params.id;
+  const userId = currUserId(req.header('Authorization'));
   if (!ObjectID.isValid(id)) {
     res.status(404).send({});
   } else {
-    Recipe.findByIdAndRemove(id).then((recipe) => {
-      if (!recipe) {
-        res.status(404).send({});
-      } else {
-        res.send(recipe);
-      }
-    }).catch((e) => {
+    Recipe.findOne({_id: id})
+      .then((recipe) => {
+        if (!recipe) {
+          res.status(404).send({});
+        } else {
+          if (recipe.owner !== userId) {
+            res.status(403).send({});
+          } else {
+            return recipe.remove();
+          }
+        }
+      })
+      .then((recipe) => res.send(recipe))
+      .catch((e) => {
       res.status(400).send(e);
     });
   }
