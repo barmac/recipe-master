@@ -1,0 +1,32 @@
+.recipe {
+  height: 300px;
+  margin: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: inset -2px -100px 80px -22px rgba(0,0,0,0.78);
+  -moz-box-shadow: inset -2px -100px 80px -22px rgba(0,0,0,0.78);
+  box-shadow: inset -2px -100px 80px -22px rgba(0,0,0,0.78);
+  display: flex;
+  align-items: flex-end;
+}
+
+.recipe>div {
+  padding-left: 8px;
+  padding-bottom: 5px;
+  padding-right: 8px;
+}
+
+.recipe>div .time {
+  color: lightgrey;
+  margin: 0;
+  height: 20px;
+}
+
+.recipe>div .name {
+  color: white;
+  font-size: 25px;
+  margin: 0;
+}
+
+.public {
+  border: solid 4px #ffbb00;
+}

@@ -2,18 +2,7 @@
   <h2>Latest recipes</h2>
   <div class="container col-xs-12">
     <div class="recipes col-xs-12 col-sm-6 col-md-4 col-lg-4" *ngFor="let recipe of recipes">
-      <div class="recipe" [ngStyle]="{background: 'url(' + recipe.photoURL + ')',
-            backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}"
-            [ngClass]="{'public': !recipe.restricted}" (click)="goToRecipe(recipe)">
-        <div>
-          <p class="recipe-time">
-            {{ recipeService.getTime(recipe) }}
-          </p>
-          <p class="recipe-name">
-            {{ recipe.name }}
-          </p>
-        </div>
-      </div>
+      <app-recipe-thumbnail [recipe]="recipe" (click)="goToRecipe(recipe)"></app-recipe-thumbnail>
     </div>
   </div>
 </div>

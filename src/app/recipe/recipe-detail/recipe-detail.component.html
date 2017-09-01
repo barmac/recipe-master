@@ -2,20 +2,7 @@
   <div *ngIf="recipe">
     <div class="row">
       <div class="col-xs-12 col-md-7">
-        <div class="recipe" [ngStyle]="{background: 'url(' + recipe.photoURL + ')',
-         backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}">
-          <div>
-            <p class="time">
-              {{ recipeService.getTime(recipe) }}
-            </p>
-            <p class="name">
-              {{ recipe.name }}
-            </p>
-          </div>
-        </div>
-        <div>
-          {{ recipe.desc }}
-        </div>
+        <app-recipe-thumbnail [recipe]="recipe"></app-recipe-thumbnail>
       </div>
       <div class="col-xs-12 col-md-5">
         <button class="btn btn-default btn-md" *ngIf="authService.userId()===recipe.owner" (click)="edit()">Edit</button>
