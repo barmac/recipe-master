@@ -22,7 +22,8 @@ const RecipeSchema = new mongoose.Schema({
       name: {
         type: String,
         default: '',
-        trim: true
+        trim: true,
+        required: true
       },
       quantity: {
         type: Number,
@@ -40,7 +41,8 @@ const RecipeSchema = new mongoose.Schema({
       name: {
         type: String,
         default: '',
-        trim: true
+        trim: true,
+        required: true
       },
       time: {
         type: Number,
