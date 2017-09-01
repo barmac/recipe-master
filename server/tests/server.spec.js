@@ -87,7 +87,7 @@ describe('/api/users', function () {
         });
     });
 
-    it('should return status 400 if password is not provided', function (done) {
+    it('should respond with status 400 if password is not provided', function (done) {
       chai.request(app)
         .post('/api/users')
         .send({
@@ -115,7 +115,7 @@ describe('/api/users', function () {
         });
     });
 
-    it('should return status 401 in case of wrong password', function (done) {
+    it('should respond with status 401 in case of wrong password', function (done) {
       chai.request(app)
         .post('/api/users/login')
         .send({
@@ -128,7 +128,7 @@ describe('/api/users', function () {
         });
     });
 
-    it('should return status 400 in case of logging not existing user', function (done) {
+    it('should respond with status 400 in case of logging not existing user', function (done) {
       chai.request(app)
         .post('/api/users/login')
         .send({
@@ -155,18 +155,34 @@ describe('/api/recipes', function () {
     User.remove({})
       .then(() => User.create(mockUsers))
       .then(() => User.findOne({}))
-      .then(function (err, user) {
-        if (err) {
-          done(err);
-        }
+      .then(function (user) {
         token = user.generateAuthToken();
         done();
       });
   });
 
   describe('GET /api/recipes', function () {
+    it('should get all recipes', function (done) {
+      chai.request(app)
+        .get('/api/recipes')
+        .set('Authorization', `Bearer ${token}`)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res).to.have.property('body').with.lengthOf(2);
+          done();
+        });
+    });
 
+    it('should respond with status 401 if no token provided', function (done) {
+      chai.request(app)
+        .get('/api/recipes')
+        .end(function (err, res) {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
   });
+
   describe('POST /api/recipes', function () {
 
   });
