@@ -220,8 +220,51 @@ describe('/api/recipes', function () {
     });
 
   });
-  describe('GET /api/recipes/:id', function () {
 
+  describe('GET /api/recipes/:id', function () {
+    it('should send recipe', function (done) {
+      chai.request(app)
+        .get(`/api/recipes/${mockRecipes[0]._id.toString()}`)
+        .set('Authorization', `Bearer ${token}`)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body.name).to.be.equal(mockRecipes[0].name);
+          expect(res.body.desc).to.be.equal(mockRecipes[0].desc);
+          expect(res.body.restricted).to.be.equal(mockRecipes[0].restricted);
+          expect(res.body.photoURL).to.be.equal(mockRecipes[0].photoURL);
+          expect(res.body.owner).to.be.equal('');
+          done();
+        });
+    });
+
+    it('should respond with status 404 if invalid id provided', function (done) {
+      chai.request(app)
+        .get('/api/recipes/123')
+        .set('Authorization', `Bearer ${token}`)
+        .end(function (err, res) {
+          expect(res).to.have.status(404);
+          done();
+        });
+    });
+
+    it('should respond with status 404 if valid id of not existing item provided', function (done) {
+      chai.request(app)
+        .get(`/api/recipes/${new ObjectID}`)
+        .set('Authorization', `Bearer ${token}`)
+        .end(function (err, res) {
+          expect(res).to.have.status(404);
+          done();
+        });
+    });
+
+    it('should respond with status 401 if no token provided', function (done) {
+      chai.request(app)
+        .get(`/api/recipes/${mockRecipes[0]._id.toString()}`)
+        .end(function (err, res) {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
   });
   describe('PUT /api/recipes/:id', function () {
 
