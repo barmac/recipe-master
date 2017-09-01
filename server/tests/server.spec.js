@@ -145,7 +145,7 @@ describe('/api/users', function () {
 
 describe('/api/recipes', function () {
 
-  let token;
+  let token, userId;
 
   beforeEach((done) => {
     Recipe.remove({}).then(() => Recipe.insertMany(mockRecipes)).then(() => done());
@@ -157,6 +157,7 @@ describe('/api/recipes', function () {
       .then(() => User.findOne({}))
       .then(function (user) {
         token = user.generateAuthToken();
+        userId = user._id.toString();
         done();
       });
   });
@@ -184,6 +185,39 @@ describe('/api/recipes', function () {
   });
 
   describe('POST /api/recipes', function () {
+    it('should create a recipe', function (done) {
+      chai.request(app)
+        .post('/api/recipes')
+        .set('Authorization', `Bearer ${token}`)
+        .send(mockRecipes[0])
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body.name).to.be.equal(mockRecipes[0].name);
+          expect(res.body.owner).to.be.equal(userId);
+          done();
+        });
+    });
+
+    it('should respond with status 400 if name not provided', function (done) {
+      chai.request(app)
+        .post('/api/recipes')
+        .set('Authorization', `Bearer ${token}`)
+        .send({})
+        .end(function (err, res) {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+    it('should respond with status 401 if no token provided', function (done) {
+      chai.request(app)
+        .post('/api/recipes')
+        .send(mockRecipes[0])
+        .end(function (err, res) {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
 
   });
   describe('GET /api/recipes/:id', function () {
