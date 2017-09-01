@@ -46,17 +46,20 @@ router.put('/:id', passport.authenticate('jwt', {session: false}), (req, res) =>
   if (!ObjectID.isValid(id)) {
     res.status(404).send({});
   } else {
-    Recipe.findById(id).then((recipe) => {
-      if (!recipe) {
-        res.status(404).send({});
-      } else {
-        if (recipe.owner !== userId) {
-          res.status(403).send({})
+    Recipe.findById(id)
+      .then((recipe) => {
+        if (!recipe) {
+          res.status(404).send({});
         } else {
-          recipe.update(recipeUpdate, () => res.send(recipe));
+          if (recipe.owner !== userId) {
+            res.status(403).send({})
+          } else {
+            return Recipe.findByIdAndUpdate(recipe._id, recipeUpdate, {new: true, runValidators: true})
+          }
         }
-      }
-    }).catch((e) => {
+      })
+      .then((newRecipe) => res.send(newRecipe))
+      .catch((e) => {
       res.status(400).send(e);
     });
   }
