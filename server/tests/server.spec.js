@@ -21,55 +21,58 @@ const mockUsers = [
 
 const mockRecipes = [
   {
-    "name": "Lorem ipsum #1",
-    "restricted": false,
-    "instructions": [
+    _id: new ObjectID(),
+    name: "Lorem ipsum #1",
+    restricted: false,
+    instructions: [
       {
-        "time": 1,
-        "name": "Lorem ipsum"
+        _id: new ObjectID(),
+        time: 1,
+        name: "Lorem ipsum"
       }
     ],
-    "ingredients": [
+    ingredients: [
       {
-        "name": "Lorem",
-        "unit": "ipsum",
-        "quantity": 1,
+        _id: new ObjectID(),
+        name: "Lorem",
+        unit: "ipsum",
+        quantity: 1,
       }
     ],
-    "photoURL": "https://firebasestorage.googleapis.com/v0/b/recipemaster-5cfba.appspot.com/o/uploads%2F1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg?alt=media&token=7c235f31-4012-42e3-9e19-0da461234e54",
-    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in imperdiet odio. Cras orci dolor, condimentum vitae pellentesque sed, tincidunt et ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris sollicitudin, velit et fermentum vehicula, tellus mauris laoreet nisi, vel interdum lectus dui ut arcu. Curabitur ornare viverra dapibus. Vivamus egestas eros libero, eget placerat dui tristique ac. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque eros neque, varius non cursus ac, imperdiet a magna. Phasellus cursus commodo erat quis molestie. Vestibulum vel lacinia mauris."
+    photoURL: "https://firebasestorage.googleapis.com/v0/b/recipemaster-5cfba.appspot.com/o/uploads%2F1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg?alt=media&token=7c235f31-4012-42e3-9e19-0da461234e54",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in imperdiet odio. Cras orci dolor, condimentum vitae pellentesque sed, tincidunt et ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris sollicitudin, velit et fermentum vehicula, tellus mauris laoreet nisi, vel interdum lectus dui ut arcu. Curabitur ornare viverra dapibus. Vivamus egestas eros libero, eget placerat dui tristique ac. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque eros neque, varius non cursus ac, imperdiet a magna. Phasellus cursus commodo erat quis molestie. Vestibulum vel lacinia mauris."
   },
   {
-    "name": "Lorem ipsum #2",
-    "restricted": false,
-    "instructions": [
+    _id: new ObjectID(),
+    name: "Lorem ipsum #2",
+    restricted: false,
+    instructions: [
       {
-        "time": 1,
-        "name": "Lorem ipsum"
+        _id: new ObjectID(),
+        time: 1,
+        name: "Lorem ipsum"
       }
     ],
-    "ingredients": [
+    ingredients: [
       {
-        "name": "Lorem",
-        "unit": "ipsum",
-        "quantity": 1,
+        _id: new ObjectID(),
+        name: "Lorem",
+        unit: "ipsum",
+        quantity: 1,
       }
     ],
-    "photoURL": "https://firebasestorage.googleapis.com/v0/b/recipemaster-5cfba.appspot.com/o/uploads%2F1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg?alt=media&token=7c235f31-4012-42e3-9e19-0da461234e54",
-    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in imperdiet odio. Cras orci dolor, condimentum vitae pellentesque sed, tincidunt et ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris sollicitudin, velit et fermentum vehicula, tellus mauris laoreet nisi, vel interdum lectus dui ut arcu. Curabitur ornare viverra dapibus. Vivamus egestas eros libero, eget placerat dui tristique ac. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque eros neque, varius non cursus ac, imperdiet a magna. Phasellus cursus commodo erat quis molestie. Vestibulum vel lacinia mauris."
+    photoURL: "https://firebasestorage.googleapis.com/v0/b/recipemaster-5cfba.appspot.com/o/uploads%2F1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg?alt=media&token=7c235f31-4012-42e3-9e19-0da461234e54",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in imperdiet odio. Cras orci dolor, condimentum vitae pellentesque sed, tincidunt et ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris sollicitudin, velit et fermentum vehicula, tellus mauris laoreet nisi, vel interdum lectus dui ut arcu. Curabitur ornare viverra dapibus. Vivamus egestas eros libero, eget placerat dui tristique ac. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque eros neque, varius non cursus ac, imperdiet a magna. Phasellus cursus commodo erat quis molestie. Vestibulum vel lacinia mauris."
   }
 ];
 
-beforeEach((done) => {
-  User.remove({}).then(() => User.create(mockUsers)).then(() => done());
-});
-
-beforeEach((done) => {
-  Recipe.remove({}).then(() => Recipe.insertMany(mockRecipes)).then(() => done());
-});
 
 describe('/api/users', function () {
-  describe('POST /users', function () {
+  beforeEach((done) => {
+    User.remove({}).then(() => User.create(mockUsers)).then(() => done());
+  });
+
+  describe('POST /api/users', function () {
     it('should create a new user', function (done) {
       chai.request(app)
         .post('/api/users')
@@ -97,7 +100,7 @@ describe('/api/users', function () {
     });
   });
 
-  describe('POST /users/login', function () {
+  describe('POST /api/users/login', function () {
     it('should return json with id and token in its body after successful login', function (done) {
       chai.request(app)
         .post('/api/users/login')
@@ -142,4 +145,38 @@ describe('/api/users', function () {
 
 describe('/api/recipes', function () {
 
+  let token;
+
+  beforeEach((done) => {
+    Recipe.remove({}).then(() => Recipe.insertMany(mockRecipes)).then(() => done());
+  });
+
+  beforeEach(function (done) {
+    User.remove({})
+      .then(() => User.create(mockUsers))
+      .then(() => User.findOne({}))
+      .then(function (err, user) {
+        if (err) {
+          done(err);
+        }
+        token = user.generateAuthToken();
+        done();
+      });
+  });
+
+  describe('GET /api/recipes', function () {
+
+  });
+  describe('POST /api/recipes', function () {
+
+  });
+  describe('GET /api/recipes/:id', function () {
+
+  });
+  describe('PUT /api/recipes/:id', function () {
+
+  });
+  describe('DELETE /api/recipes/:id', function () {
+
+  });
 });
