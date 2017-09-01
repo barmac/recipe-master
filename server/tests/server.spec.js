@@ -366,6 +366,57 @@ describe('/api/recipes', function () {
   });
 
   describe('DELETE /api/recipes/:id', function () {
+    it('should remove a recipe', function (done) {
+      chai.request(app)
+        .delete(`/api/recipes/${mockRecipes[0]._id.toString()}`)
+        .set('Authorization', `Bearer ${token}`)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          Recipe.findById(mockRecipes[0]._id.toString())
+            .then(function (recipe) {
+              expect(recipe).to.be.null;
+              done();
+            });
+        });
+    });
 
+    it('should respond with status 404 if invalid id provided', function (done) {
+      chai.request(app)
+        .delete('/api/recipes/123')
+        .set('Authorization', `Bearer ${token}`)
+        .end(function (err, res) {
+          expect(res).to.have.status(404);
+          done();
+        });
+    });
+
+    it('should respond with status 404 if valid id of not existing item provided', function (done) {
+      chai.request(app)
+        .delete(`/api/recipes/${new ObjectID}`)
+        .set('Authorization', `Bearer ${token}`)
+        .end(function (err, res) {
+          expect(res).to.have.status(404);
+          done();
+        });
+    });
+
+    it('should respond with status 403 if request not from owner', function (done) {
+      chai.request(app)
+        .delete(`/api/recipes/${mockRecipes[1]._id.toString()}`)
+        .set('Authorization', `Bearer ${token}`)
+        .end(function (err, res) {
+          expect(res).to.have.status(403);
+          done();
+        });
+    });
+
+    it('should respond with status 401 if no token provided', function (done) {
+      chai.request(app)
+        .delete(`/api/recipes/${mockRecipes[0]._id.toString()}`)
+        .end(function (err, res) {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
   });
 });
