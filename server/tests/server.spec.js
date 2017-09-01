@@ -155,11 +155,12 @@ describe('/api/recipes', function () {
     User.remove({})
       .then(() => User.create(mockUsers))
       .then(() => User.findOne({}))
-      .then(function (user) {
+      .then((user) => {
         token = user.generateAuthToken();
         userId = user._id.toString();
-        done();
-      });
+      })
+      .then(() => Recipe.findByIdAndUpdate(mockRecipes[0]._id, {owner: userId}))
+      .then(() => done());
   });
 
   describe('GET /api/recipes', function () {
@@ -218,7 +219,6 @@ describe('/api/recipes', function () {
           done();
         });
     });
-
   });
 
   describe('GET /api/recipes/:id', function () {
@@ -232,7 +232,7 @@ describe('/api/recipes', function () {
           expect(res.body.desc).to.be.equal(mockRecipes[0].desc);
           expect(res.body.restricted).to.be.equal(mockRecipes[0].restricted);
           expect(res.body.photoURL).to.be.equal(mockRecipes[0].photoURL);
-          expect(res.body.owner).to.be.equal('');
+          expect(res.body.owner).to.be.equal(userId);
           done();
         });
     });
@@ -266,9 +266,103 @@ describe('/api/recipes', function () {
         });
     });
   });
+
   describe('PUT /api/recipes/:id', function () {
 
+    const newName = 'Updated recipe name';
+
+    it('should update a recipe', function (done) {
+      chai.request(app)
+        .put(`/api/recipes/${mockRecipes[0]._id.toString()}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          name: newName
+        })
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          Recipe.findById(mockRecipes[0]._id.toString())
+            .then(function (recipe) {
+              expect(recipe.name).to.be.equal(newName);
+              done();
+            });
+        });
+    });
+
+    it('should respond with status 404 if invalid id provided', function (done) {
+      chai.request(app)
+        .put('/api/recipes/123')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          name: newName
+        })
+        .end(function (err, res) {
+          expect(res).to.have.status(404);
+          done();
+        });
+    });
+
+    it('should respond with status 404 if valid id of not existing item provided', function (done) {
+      chai.request(app)
+        .put(`/api/recipes/${new ObjectID}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          name: newName
+        })
+        .end(function (err, res) {
+          expect(res).to.have.status(404);
+          done();
+        });
+    });
+
+    it('should respond with status 401 if no token provided', function (done) {
+      chai.request(app)
+        .put(`/api/recipes/${mockRecipes[0]._id.toString()}`)
+        .send({
+          name: newName
+        })
+        .end(function (err, res) {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
+
+    it('should respond with status 400 if invalid name provided', function (done) {
+      chai.request(app)
+        .put(`/api/recipes/${mockRecipes[0]._id.toString()}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          name: ''
+        })
+        .end(function (err, res) {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+    it('should respond with status 403 if request not from owner', function (done) {
+      chai.request(app)
+        .put(`/api/recipes/${mockRecipes[1]._id.toString()}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          name: newName
+        })
+        .end(function (err, res) {
+          expect(res).to.have.status(403);
+          done();
+        });
+    });
+
+    it('should respond with status 401 if no token provided', function (done) {
+      chai.request(app)
+        .post('/api/recipes')
+        .send(mockRecipes[0])
+        .end(function (err, res) {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
   });
+
   describe('DELETE /api/recipes/:id', function () {
 
   });
