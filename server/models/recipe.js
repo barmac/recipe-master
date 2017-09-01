@@ -27,7 +27,8 @@ const RecipeSchema = new mongoose.Schema({
       },
       quantity: {
         type: Number,
-        default: null
+        default: null,
+        min: 0
       },
       unit: {
         type: String,
@@ -46,7 +47,8 @@ const RecipeSchema = new mongoose.Schema({
       },
       time: {
         type: Number,
-        default: null
+        default: null,
+        min: 0
       }
     }]
   },
