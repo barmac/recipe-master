@@ -354,8 +354,10 @@ describe('/api/recipes', function () {
 
     it('should respond with status 401 if no token provided', function (done) {
       chai.request(app)
-        .post('/api/recipes')
-        .send(mockRecipes[0])
+        .put(`/api/recipes/${mockRecipes[0]._id.toString()}`)
+        .send({
+          name: newName
+        })
         .end(function (err, res) {
           expect(res).to.have.status(401);
           done();
