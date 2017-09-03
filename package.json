@@ -7,7 +7,7 @@
     "postinstall": "ng build --prod",
     "start": "node server",
     "build": "ng build",
-    "test": "export MONGODB_URI='mongodb://localhost:27017/RecipeMasterTest' && mocha server/tests/ --reporter nyan",
+    "test": "export MONGODB_URI='mongodb://localhost:27017/RecipeMasterTest' && mocha server/tests/ --reporter nyan && unset MONGODB_URI",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
