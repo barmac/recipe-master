@@ -19,7 +19,13 @@ export class UploadFormComponent {
   upload() {
     const file = this.selectedFiles.item(0);
     this.currentUpload = new Upload(file);
-    this.upSvc.pushUpload(this.currentUpload);
+    this.upSvc.pushUpload(this.currentUpload)
+      .then(() => {
+        this.onUpload.emit(this.currentUpload.url);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     return false;
   }
   copy() {
